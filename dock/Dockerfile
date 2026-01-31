@@ -12,7 +12,10 @@ RUN if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm inst
 # Run build if defined (safe no-op if absent)
 RUN if grep -q "\"build\"" package.json 2>/dev/null; then npm run build || true; fi
 
-ENV KE_DATA_DIR=/config
+# Runtime defaults used by the project's CLI
+ENV KES_PATH_DATA=/config
+ENV KES_PORT=8080
+
 VOLUME ["/config","/mnt/karaoke"]
 EXPOSE 8080
 
@@ -26,6 +29,7 @@ CMD ["sh", "-c", "\
       printf '{\"database\":\"db.sqlite\",\"mediaDir\":\"/mnt/karaoke\"}\\n' > \"${KES_PATH_DATA}/config.json\"; \
     fi \
   fi && \
+  export PORT=${KES_PORT} && \
   if [ -f dist/server/main.js ]; then \
     exec node dist/server/main.js; \
   elif [ -f build/server/main.js ]; then \
