@@ -27,9 +27,10 @@ ENV NODE_ENV=production
 VOLUME ["/config","/mnt/karaoke"]
 EXPOSE 8080
 
-# Run from / to match maintainer behavior
+# Use Compose-provided environment variables
+# and start in / to match maintainer behavior
 CMD ["sh", "-c", "cd / && exec karaoke-eternal-server \
-  --data /config \
-  --serverLogLevel 0 \
-  --scannerLogLevel 0 \
-  -p 8080"]
+  -p ${KES_PORT} \
+  --data ${KES_PATH_DATA} \
+  --serverLogLevel ${KES_SERVER_LOG_LEVEL} \
+  --scannerLogLevel ${KES_SCANNER_LOG_LEVEL}"]
