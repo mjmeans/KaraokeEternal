@@ -1,0 +1,16 @@
+services:
+  karaoke:
+    build:
+      context: https://github.com/mjmeans/KaraokeEternal.git#refs/heads/1.0.0
+      dockerfile: Dockerfile
+    environment:
+      - KES_PATH_DATA=/config
+      - KES_PORT=8080
+      - KES_SERVER_LOG_LEVEL=0
+      - KES_SCANNER_LOG_LEVEL=0
+    ports:
+      - "19201:8080"
+    volumes:
+      - /mnt/Storage/media/karaoke:/mnt/karaoke:ro
+      - /mnt/Storage/apps/ke-test-1.0.0:/config
+    restart: unless-stopped
