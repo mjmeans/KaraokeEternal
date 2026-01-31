@@ -1,14 +1,12 @@
-# dock/Dockerfile - minimal, does not modify upstream source
+# dock/Dockerfile
 FROM node:24-alpine
 
 RUN apk add --no-cache python3 make g++ bash
 
 WORKDIR /opt/app
-
-# Build context is the repo at the requested tag; copy it into the image
 COPY . /opt/app
 
-# Install dependencies (use lockfile if present)
+# Install dependencies (uses package-lock.json if present)
 RUN if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
 
 # Run build if defined (safe no-op if absent)
@@ -18,6 +16,7 @@ ENV KE_DATA_DIR=/config
 VOLUME ["/config","/mnt/karaoke"]
 EXPOSE 3000
 
+# Ensure runtime config exists on the mounted host path, then prefer compiled entrypoint.
 CMD ["sh", "-c", "\
   mkdir -p \"${KE_DATA_DIR}\" && \
   if [ ! -f \"${KE_DATA_DIR}/config.json\" ]; then \
