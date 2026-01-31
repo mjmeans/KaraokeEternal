@@ -18,12 +18,12 @@ EXPOSE 8080
 
 # Ensure runtime config exists on the mounted host path, then prefer compiled entrypoint.
 CMD ["sh", "-c", "\
-  mkdir -p \"${KE_DATA_DIR}\" && \
-  if [ ! -f \"${KE_DATA_DIR}/config.json\" ]; then \
+  mkdir -p \"${KES_PATH_DATA}\" && \
+  if [ ! -f \"${KES_PATH_DATA}/config.json\" ]; then \
     if [ -f ./config/config.default.json ]; then \
-      cp ./config/config.default.json \"${KE_DATA_DIR}/config.json\"; \
+      cp ./config/config.default.json \"${KES_PATH_DATA}/config.json\"; \
     else \
-      printf '{\"database\":\"db.sqlite\",\"mediaDir\":\"/mnt/karaoke\"}\\n' > \"${KE_DATA_DIR}/config.json\"; \
+      printf '{\"database\":\"db.sqlite\",\"mediaDir\":\"/mnt/karaoke\"}\\n' > \"${KES_PATH_DATA}/config.json\"; \
     fi \
   fi && \
   if [ -f dist/server/main.js ]; then \
