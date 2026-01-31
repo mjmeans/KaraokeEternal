@@ -29,4 +29,5 @@ ENV NODE_ENV=production
 EXPOSE 8080
 
 # Correct TypeScript entrypoint
-CMD ["npx", "ts-node", "server/main.ts"]
+# CMD ["npx", "ts-node", "server/main.ts"]
+CMD ["sleep", "999999"]
