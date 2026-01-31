@@ -14,11 +14,6 @@ RUN if grep -q "\"build\"" package.json 2>/dev/null; then npm run build || true;
 
 # Runtime defaults used by the project's CLI
 ENV NODE_ENV=production
-ENV KES_CONSOLE_COLORS=false
-ENV KES_PATH_DATA=/config
-ENV KES_PORT=8080
-ENV KES_SCANNER_LOG_LEVEL=0
-ENV KES_SERVER_LOG_LEVEL=0
 
 VOLUME ["/config","/mnt/karaoke"]
 EXPOSE 8080
