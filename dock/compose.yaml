@@ -1,0 +1,23 @@
+services:
+  karaokeeternal:
+    build:
+      # context: https://github.com/mjmeans/KaraokeEternal.git#refs/tags/v2.0.1
+      context: https://github.com/mjmeans/KaraokeEternal.git#refs/heads/dock
+      dockerfile: ./src/dock/Dockerfile
+
+    ports:
+      - "9201:8080"
+
+    volumes:
+      # Host media directory → container media directory
+      - ./media:/mnt/karaoke:ro
+
+      # Persistent app data (SQLite DB, config)
+      - ./data:/app/data
+
+    environment:
+      KE_MEDIA_DIR: /media
+      KE_DATA_DIR: /app/data
+      NODE_ENV: production
+
+    restart: unless-stopped
