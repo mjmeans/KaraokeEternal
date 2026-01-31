@@ -7,8 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies and build the production bundle
-RUN npm install
-RUN npm run build
+RUN npm install --production
 
 # Create persistent directories
 RUN mkdir -p /config \
@@ -23,4 +22,4 @@ ENV NODE_ENV=production
 EXPOSE 8080
 
 # Default command
-CMD ["npm", "start"]
+CMD ["node", "server/index.js"]
