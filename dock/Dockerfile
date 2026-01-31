@@ -21,6 +21,7 @@ EXPOSE 8080
 
 # Ensure runtime config exists on the mounted host path, then prefer compiled entrypoint.
 CMD ["sh", "-c", "\
+  mkdir -p \"${KES_PATH_DATA}\" && \
   if [ ! -f \"${KES_PATH_DATA}/config.json\" ]; then \
     if [ -f ./config/config.default.json ]; then \
       cp ./config/config.default.json \"${KES_PATH_DATA}/config.json\"; \
