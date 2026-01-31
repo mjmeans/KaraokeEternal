@@ -18,6 +18,9 @@ RUN mkdir -p /config \
 # Install TypeScript runtime
 RUN npm install ts-node typescript
 
+# DEBUG: show what the entrypoint will actually be
+RUN echo "DEBUG: Dockerfile CMD is: npx ts-node server/main.ts"
+
 # Environment variables expected by Karaoke Eternal
 ENV KE_MEDIA_DIR=/mnt/karaoke
 ENV KE_DATA_DIR=/config
