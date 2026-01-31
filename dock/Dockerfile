@@ -14,7 +14,7 @@ RUN if grep -q "\"build\"" package.json 2>/dev/null; then npm run build || true;
 
 ENV KE_DATA_DIR=/config
 VOLUME ["/config","/mnt/karaoke"]
-EXPOSE 3000
+EXPOSE 8080
 
 # Ensure runtime config exists on the mounted host path, then prefer compiled entrypoint.
 CMD ["sh", "-c", "\
