@@ -6,9 +6,6 @@ RUN apk add --no-cache git python3 make g++ bash
 WORKDIR /build
 
 ARG TAG
-
-CMD ["sleep", "999999"]
-
 RUN git clone https://github.com/mjmeans/KaraokeEternal.git . \
     && git checkout $TAG
 
@@ -21,6 +18,8 @@ ENV NODE_ENV=production
 
 VOLUME ["/config","/mnt/karaoke"]
 EXPOSE 8080
+
+CMD ["sleep", "999999"]
 
 #CMD ["sh", "-c", "cd / && exec karaoke-eternal-server \
 #  -p ${KES_PORT} \
