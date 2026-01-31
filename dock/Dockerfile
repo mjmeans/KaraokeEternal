@@ -14,8 +14,13 @@ ENV PATH=/opt/.npm-global/bin:$PATH
 
 WORKDIR /opt/app
 
-# Copy repo source
-COPY . /opt/app
+# Fetch a clean copy of the repo at the specified TAG
+RUN apk add --no-cache git && \
+    git clone https://github.com/mjmeans/KaraokeEternal.git . && \
+    git checkout "$TAG"
+
+RUN git rev-parse --abbrev-ref HEAD > /opt/app/.build_tag && \
+    git rev-parse HEAD >> /opt/app/.build_tag
 
 # Install dependencies (uses package-lock.json if present)
 RUN if [ -f package-lock.json ]; then \
