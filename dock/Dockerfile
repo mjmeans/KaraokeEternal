@@ -1,34 +1,23 @@
-# Dockerfile used by compose build.context (dock/Dockerfile in the repo)
-# This Dockerfile is intentionally minimal and does not change upstream source.
+# dock/Dockerfile - minimal, does not modify upstream source
 FROM node:24-alpine
 
-# Install build tools commonly needed for native modules
 RUN apk add --no-cache python3 make g++ bash
 
 WORKDIR /opt/app
 
-# The build context will be the checked-out repo at the requested tag.
-# Copy the entire context into the image.
+# Build context is the repo at the requested tag; copy it into the image
 COPY . /opt/app
 
-# Install dependencies using lockfile if present
-RUN if [ -f package-lock.json ]; then \
-      npm ci --no-audit --no-fund; \
-    else \
-      npm install --no-audit --no-fund; \
-    fi
+# Install dependencies (use lockfile if present)
+RUN if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
 
-# Run build if project defines one (safe no-op if absent)
+# Run build if defined (safe no-op if absent)
 RUN if grep -q "\"build\"" package.json 2>/dev/null; then npm run build || true; fi
 
-EXPOSE 8080
-
 ENV KE_DATA_DIR=/config
-
 VOLUME ["/config","/mnt/karaoke"]
+EXPOSE 3000
 
-# Entrypoint: ensure persistent config exists (copy default if present),
-# then prefer compiled entrypoint; otherwise fall back to start script or TS entry.
 CMD ["sh", "-c", "\
   mkdir -p \"${KE_DATA_DIR}\" && \
   if [ ! -f \"${KE_DATA_DIR}/config.json\" ]; then \
