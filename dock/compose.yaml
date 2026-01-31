@@ -1,23 +1,15 @@
-version: "3.8"
-
 services:
   karaoke:
-    # Build from the Git repository at the exact tag/branch specified here.
-    # Set TAG to the tag or branch you want (example: "dock" or "v1.2.3").
     build:
-      context: "https://github.com/mjmeans/KaraokeEternal.git#refs/tags/${TAG:-dock}"
+      context: https://github.com/mjmeans/KaraokeEternal.git#refs/heads/dock
       dockerfile: dock/Dockerfile
-    image: karaoke-eternal:${TAG:-dock}
     environment:
-      KE_DATA_DIR: /config
-      KE_MEDIA_DIR: /mnt/karaoke
-      NODE_ENV: production
-    volumes:
-      - karaoke_config:/config
-      - /path/to/your/media:/mnt/karaoke:ro
+      - KES_PATH_DATA=/config
+      - KES_PORT=8080
     ports:
-      - "18080:8080"
+      - '19201:8080'
     restart: unless-stopped
-
-volumes:
-  karaoke_config:
+    volumes:
+      - ./mnt/Storage/karaoke:/mnt/karaoke:ro
+      - ./mnt/Storage/apps/ke2-0-2-beta-migration-test:/config
+version: '3.8'
