@@ -3,6 +3,12 @@ services:
     build:
       context: https://github.com/mjmeans/KaraokeEternal.git#refs/heads/dock
       dockerfile: dock/Dockerfile
+    environment:
+      - KES_CONSOLE_COLORS=false
+      - KES_PATH_DATA=/config
+      - KES_PORT=8080
+      - KES_SCANNER_LOG_LEVEL=0
+      - KES_SERVER_LOG_LEVEL=0
     ports:
       - '19201:8080'
     restart: unless-stopped
