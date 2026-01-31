@@ -13,11 +13,11 @@ services:
       - ./media:/mnt/karaoke:ro
 
       # Persistent app data (SQLite DB, config)
-      - ./data:/app/data
+      - ./data:/config
 
     environment:
-      KE_MEDIA_DIR: /media
-      KE_DATA_DIR: /app/data
+      KE_MEDIA_DIR: /mnt/karaoke
+      KE_DATA_DIR: /config
       NODE_ENV: production
 
     restart: unless-stopped
