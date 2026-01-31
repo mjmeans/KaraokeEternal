@@ -3,8 +3,8 @@ services:
     build:
       context: https://github.com/mjmeans/KaraokeEternal.git#refs/heads/dock
       args:
-        TAG: 1.0.0
-      dockerfile: dock/Dockerfile-node14
+        TAG: 2.0.0
+      dockerfile: dock/Dockerfile-node24
     environment:
       - KES_PATH_DATA=/config
       - KES_PORT=8080
