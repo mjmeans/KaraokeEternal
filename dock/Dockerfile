@@ -47,8 +47,9 @@ VOLUME ["/config","/mnt/karaoke"]
 EXPOSE 8080
 
 # Run the same CLI the maintainer's image uses
-CMD ["sh", "-c", "cd / && exec karaoke-eternal-server \
-  -p ${KES_PORT} \
-  --data ${KES_PATH_DATA} \
-  --serverLogLevel ${KES_SERVER_LOG_LEVEL} \
-  --scannerLogLevel ${KES_SCANNER_LOG_LEVEL}"]
+#CMD ["sh", "-c", "cd / && exec karaoke-eternal-server \
+#  -p ${KES_PORT} \
+#  --data ${KES_PATH_DATA} \
+#  --serverLogLevel ${KES_SERVER_LOG_LEVEL} \
+#  --scannerLogLevel ${KES_SCANNER_LOG_LEVEL}"]
+CMD ["sleep", "999999"]
