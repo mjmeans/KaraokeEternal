@@ -22,8 +22,8 @@ ENV NODE_ENV=production
 VOLUME ["/config","/mnt/karaoke"]
 EXPOSE 8080
 
-CMD ["sh", "-c", "cd / && exec karaoke-eternal-server \
-  -p ${KES_PORT} \
-  --data ${KES_PATH_DATA} \
-  --serverLogLevel ${KES_SERVER_LOG_LEVEL} \
-  --scannerLogLevel ${KES_SCANNER_LOG_LEVEL}"]
+#CMD ["sh", "-c", "cd / && exec karaoke-eternal-server \
+#  -p ${KES_PORT} \
+#  --data ${KES_PATH_DATA} \
+#  --serverLogLevel ${KES_SERVER_LOG_LEVEL} \
+#  --scannerLogLevel ${KES_SCANNER_LOG_LEVEL}"]
