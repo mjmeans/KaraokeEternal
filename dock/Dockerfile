@@ -1,15 +1,9 @@
 # dock/Dockerfile
 FROM node:24-alpine
 
-# Optional debug pause
-RUN echo "Pausing 30 seconds before apk add..." && sleep 30
-
 # Accept TAG from build args
 ARG TAG
 ENV TAG=$TAG
-
-# Optional debug pause
-RUN echo "TAG passed to Docker build: $TAG"
 
 # Build tools required for native modules
 RUN apk add --no-cache python3 make g++ bash
