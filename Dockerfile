@@ -21,6 +21,9 @@ RUN npm run build
 # Install globally to mimic real-world installs
 RUN npm install -g . --no-audit --no-fund
 
+# Clean up source
+RUN rm -rf /opt/app
+
 # Runtime environment
 ENV NODE_ENV=production
 
