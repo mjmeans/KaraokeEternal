@@ -1,6 +1,8 @@
 services:
   karaoke:
     build:
+      args:
+        TAG: 2.0.0
       context: https://github.com/mjmeans/KaraokeEternal.git#refs/heads/dock
       dockerfile: dock/Dockerfile
     environment:
