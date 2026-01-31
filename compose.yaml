@@ -6,8 +6,8 @@ services:
     environment:
       - KES_PATH_DATA=/config
       - KES_PORT=8080
-      - KES_SERVER_LOG_LEVEL=0
-      - KES_SCANNER_LOG_LEVEL=0
+      - KES_SERVER_LOG_LEVEL=3
+      - KES_SCANNER_LOG_LEVEL=3
     ports:
       - "19201:8080"
     volumes:
