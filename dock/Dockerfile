@@ -34,11 +34,11 @@ RUN TAG="$TAG" && \
 
 RUN set -e; \
     if [ -f package-lock.json ]; then \
-        echo "Running npm ci"; \
-        npm ci --no-audit --no-fund || { echo "npm ci failed"; cat npm-debug.log 2>/dev/null || true; exit 1; }; \
+        echo "Running npm ci (verbose)"; \
+        npm ci --verbose --no-audit --no-fund 2>&1; \
     else \
-        echo "Running npm install"; \
-        npm install --no-audit --no-fund || { echo "npm install failed"; cat npm-debug.log 2>/dev/null || true; exit 1; }; \
+        echo "Running npm install (verbose)"; \
+        npm install --verbose --no-audit --no-fund 2>&1; \
     fi
 
 ## Install dependencies (uses package-lock.json if present)
