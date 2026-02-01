@@ -1,0 +1,56 @@
+# dock/Dockerfile
+FROM node:18-alpine
+
+# Accept TAG from build args
+ARG TAG
+ENV TAG=$TAG
+
+# Build tools required for native modules
+RUN apk add --no-cache python3 make g++ bash git
+
+# Global npm prefix to match maintainer's image
+ENV NPM_CONFIG_PREFIX=/opt/.npm-global
+ENV PATH=/opt/.npm-global/bin:$PATH
+
+WORKDIR /opt/app
+
+# Copy repo source
+COPY . /opt/app
+
+# Clone the repo at TAG into a separate folder without touching /opt/app
+RUN mkdir -p /opt/tag
+RUN TAG=\"$TAG\" && bash -c 'echo "TAG=$TAG" > /opt/app/tag_debug'
+RUN git clone https://github.com/mjmeans/KaraokeEternal.git /opt/tag
+RUN TAG="$TAG" && bash -c 'git -C /opt/tag checkout "$TAG"'
+
+WORKDIR /opt/tag
+
+# Use the checkout TAG as the local npm version string
+RUN TAG="$TAG" && \
+    sed -i "s/\"version\": \".*\"/\"version\": \"CHECKOUT-${TAG}\"/" /opt/tag/package.json
+
+RUN npm install --no-audit --no-fund
+
+# Build the project (safe no-op if no build script exists)
+RUN if grep -q "\"build\"" package.json 2>/dev/null; then \
+      npm run build; \
+    fi
+
+# Create local npm package tarball
+RUN npm pack
+
+# Install the generated tarball globally
+RUN npm install -g ./*.tgz --no-audit --no-fund
+
+# Runtime environment
+ENV NODE_ENV=production
+
+VOLUME ["/config","/mnt/karaoke"]
+EXPOSE 8080
+
+# Run the same CLI the maintainer's image uses
+CMD ["sh", "-c", "cd / && exec karaoke-eternal-server \
+  -p ${KES_PORT} \
+  --data ${KES_PATH_DATA} \
+  --serverLogLevel ${KES_SERVER_LOG_LEVEL} \
+  --scannerLogLevel ${KES_SCANNER_LOG_LEVEL}"]
