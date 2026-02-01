@@ -21,9 +21,9 @@ COPY . /opt/app
 # NEW: clone the repo at the TAG into /opt/tagtest
 # Clone the repo at TAG into a separate folder without touching /opt/app
 RUN mkdir -p /opt/tagtest
-RUN git clone https://github.com/mjmeans/KaraokeEternal.git /opt/tagtest
-#RUN git -C /opt/tagtest checkout "$TAG"
-RUN git -C /opt/tagtest checkout "v2.0.0"
+RUN git clone --depth=0 --no-single-branch https://github.com/mjmeans/KaraokeEternal.git /opt/tagtest
+RUN git -C /opt/tagtest checkout "$TAG"
+#RUN git -C /opt/tagtest checkout "v2.0.0"
 RUN echo "TAG='$TAG'" > /opt/app/.tag_debug
 
 # Install dependencies (uses package-lock.json if present)
