@@ -22,7 +22,7 @@ COPY . /opt/app
 RUN mkdir -p /opt/tagtest
 RUN TAG=\"$TAG\" && bash -c 'echo "TAG=$TAG" > /opt/app/tag_debug'
 RUN git clone https://github.com/mjmeans/KaraokeEternal.git /opt/tagtest
-RUN TAG=\"$TAG\" && bash -c 'git -C /opt/tagtest checkout $TAG'
+RUN TAG="$TAG" && bash -c 'git -C /opt/tagtest checkout "$TAG"'
 
 # These didn't work
 #RUN git -C /opt/tagtest checkout "v2.0.0"
