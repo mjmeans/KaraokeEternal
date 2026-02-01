@@ -23,14 +23,11 @@ RUN TAG=\"$TAG\" && bash -c 'echo "TAG=$TAG" > /opt/app/tag_debug'
 RUN git clone https://github.com/mjmeans/KaraokeEternal.git /opt/tag
 RUN TAG="$TAG" && bash -c 'git -C /opt/tag checkout "$TAG"'
 
-# These didn't work
-#RUN git -C /opt/tagtest checkout "v2.0.0"
-#RUN git -C /opt/tagtest checkout "$TAG"
-
 WORKDIR /opt/tag
 
+# Use the checkout TAG as the local npm version string
 RUN TAG="$TAG" && \
-    sed -i "s/\"version\": \".*\"/\"version\": \"${TAG}-localbuild\"/" /opt/tag/package.json
+    sed -i "s/\"version\": \".*\"/\"version\": \"CHECKOUT-${TAG}\"/" /opt/tag/package.json
 
 RUN npm install --no-audit --no-fund
 
