@@ -2,7 +2,8 @@ services:
   karaoke:
     build:
       args:
-        TAG: 2.0.0
+        # Note you can use anything in TAG that would be appropriate for: git checkout <tag/brahcn/hash>
+        TAG: v2.0.1
       context: https://github.com/mjmeans/KaraokeEternal.git#refs/heads/dock
       dockerfile: dock/Dockerfile
     environment:
