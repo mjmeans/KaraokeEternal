@@ -34,13 +34,6 @@ RUN TAG="$TAG" && \
 
 RUN npm install --no-audit --no-fund
 
-## Install dependencies (uses package-lock.json if present)
-#RUN if [ -f package-lock.json ]; then \
-#      npm ci --no-audit --no-fund; \
-#    else \
-#      npm install --no-audit --no-fund; \
-#    fi
-
 # Build the project (safe no-op if no build script exists)
 RUN if grep -q "\"build\"" package.json 2>/dev/null; then \
       npm run build; \
