@@ -32,12 +32,21 @@ WORKDIR /opt/tag
 RUN TAG="$TAG" && \
     sed -i "s/\"version\": \".*\"/\"version\": \"${TAG}-localbuild\"/" /opt/tag/package.json
 
-# Install dependencies (uses package-lock.json if present)
-RUN if [ -f package-lock.json ]; then \
-      npm ci --no-audit --no-fund; \
+RUN set -e; \
+    if [ -f package-lock.json ]; then \
+        echo "Running npm ci"; \
+        npm ci --no-audit --no-fund || { echo "npm ci failed"; cat npm-debug.log 2>/dev/null || true; exit 1; }; \
     else \
-      npm install --no-audit --no-fund; \
+        echo "Running npm install"; \
+        npm install --no-audit --no-fund || { echo "npm install failed"; cat npm-debug.log 2>/dev/null || true; exit 1; }; \
     fi
+
+## Install dependencies (uses package-lock.json if present)
+#RUN if [ -f package-lock.json ]; then \
+#      npm ci --no-audit --no-fund; \
+#    else \
+#      npm install --no-audit --no-fund; \
+#    fi
 
 # Build the project (safe no-op if no build script exists)
 RUN if grep -q "\"build\"" package.json 2>/dev/null; then \
