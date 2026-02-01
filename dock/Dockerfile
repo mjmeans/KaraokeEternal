@@ -26,7 +26,7 @@ RUN git clone https://github.com/mjmeans/KaraokeEternal.git /opt/tagtest
 #RUN git -C /opt/tagtest checkout "v2.0.0"
 #RUN git -C /opt/tagtest checkout "$TAG"
 #RUN TAG=$TAG bash -c 'git -C /opt/tagtest checkout "$TAG"'
-RUN TAG=$TAG bash -c 'echo "TAG=$TAG" > /opt/app/.tag_debug'
+RUN TAG=$TAG bash -c 'echo "TAG=$TAG" > /opt/app/tag_debug'
 
 # Install dependencies (uses package-lock.json if present)
 RUN if [ -f package-lock.json ]; then \
