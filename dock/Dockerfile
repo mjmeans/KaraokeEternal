@@ -6,7 +6,7 @@ ARG TAG
 ENV TAG=$TAG
 
 # Build tools required for native modules
-RUN apk add --no-cache python3 make g++ bash
+RUN apk add --no-cache python3 make g++ bash git
 
 # Global npm prefix to match maintainer's image
 ENV NPM_CONFIG_PREFIX=/opt/.npm-global
