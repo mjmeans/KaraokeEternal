@@ -30,7 +30,7 @@ RUN TAG="$TAG" && bash -c 'git -C /opt/tag checkout "$TAG"'
 WORKDIR /opt/tag
 
 RUN TAG="$TAG" && \
-    sed -i "s/\"version\": \".*\"/\"version\": \"${TAG}-localbuild\"/" /opt/app/package.json
+    sed -i "s/\"version\": \".*\"/\"version\": \"${TAG}-localbuild\"/" /opt/tag/package.json
 
 # Install dependencies (uses package-lock.json if present)
 RUN if [ -f package-lock.json ]; then \
