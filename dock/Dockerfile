@@ -32,14 +32,7 @@ WORKDIR /opt/tag
 RUN TAG="$TAG" && \
     sed -i "s/\"version\": \".*\"/\"version\": \"${TAG}-localbuild\"/" /opt/tag/package.json
 
-RUN set -e; \
-    if [ -f package-lock.json ]; then \
-        echo "Running npm ci (verbose)"; \
-        npm ci --verbose --no-audit --no-fund 2>&1; \
-    else \
-        echo "Running npm install (verbose)"; \
-        npm install --verbose --no-audit --no-fund 2>&1; \
-    fi
+RUN npm install --no-audit --no-fund
 
 ## Install dependencies (uses package-lock.json if present)
 #RUN if [ -f package-lock.json ]; then \
