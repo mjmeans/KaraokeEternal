@@ -17,16 +17,17 @@ WORKDIR /opt/app
 # Copy repo source
 COPY . /opt/app
 
-
 # Clone the repo at TAG into a separate folder without touching /opt/app
-RUN mkdir -p /opt/tagtest
+RUN mkdir -p /opt/tag
 RUN TAG=\"$TAG\" && bash -c 'echo "TAG=$TAG" > /opt/app/tag_debug'
-RUN git clone https://github.com/mjmeans/KaraokeEternal.git /opt/tagtest
-RUN TAG="$TAG" && bash -c 'git -C /opt/tagtest checkout "$TAG"'
+RUN git clone https://github.com/mjmeans/KaraokeEternal.git /opt/tag
+RUN TAG="$TAG" && bash -c 'git -C /opt/tag checkout "$TAG"'
 
 # These didn't work
 #RUN git -C /opt/tagtest checkout "v2.0.0"
 #RUN git -C /opt/tagtest checkout "$TAG"
+
+WORKDIR /opt/tag
 
 # Install dependencies (uses package-lock.json if present)
 RUN if [ -f package-lock.json ]; then \
